@@ -89,6 +89,16 @@ object AkkaHttpConnector {
              getFromFile(f)  
             }
           },
+          get {
+            path(projectPrefix / Segment/"datacollection.xls") {
+               { (userId) =>
+                var file: File = null
+                val desFilePath = StarterMain.fileSystemPath + "/excel/" + userId+"/"+userId+".xls"
+                file = new File(desFilePath)
+                getFromFile(file)
+              }
+            }
+          },
           post {
             path(projectPrefix / "uploads" / Segment / Segment / Segment) { (dir1, dir2, fileName) =>
               toStrictEntity(10.seconds) {
@@ -947,6 +957,63 @@ object AkkaHttpConnector {
               }
             }
           },
+          path(projectPrefix / "getGameDateWiseReport") {
+            post {
+              entity(as[String]) { data =>
+                implicit val formats = DefaultFormats
+                val jValue = parse(data)
+                val getGameDateWiseReportRequest = jValue.extract[GetGameDateWiseReportRequest]
+                var response: GetGameDateWiseResponse = null
+                val future = Patterns.ask(StarterMain.adminSupervisorActorRef, getGameDateWiseReportRequest, timeout)
+                try {
+                  val getGameDateWiseResponse = Await.result(future, timeout.duration).asInstanceOf[GetGameDateWiseResponse]
+                  response = getGameDateWiseResponse
+                } catch {
+                  case e: Exception =>
+                    e.printStackTrace()
+                }
+                complete(write(response))
+              }
+            }
+          },
+          path(projectPrefix / "gameCsvFileGenrate") {
+            post {
+              entity(as[String]) { data =>
+                implicit val formats = DefaultFormats
+                val jValue = parse(data)
+                val gameCsvFileGenrateRequest = jValue.extract[GameCsvFileGenrateRequest]
+                var response: GameCsvFileGenrateResponse = null
+                val future = Patterns.ask(StarterMain.adminSupervisorActorRef, gameCsvFileGenrateRequest, timeout)
+                try {
+                  val gameCsvFileGenrateResponse = Await.result(future, timeout.duration).asInstanceOf[GameCsvFileGenrateResponse]
+                  response = gameCsvFileGenrateResponse
+                } catch {
+                  case e: Exception =>
+                    e.printStackTrace()
+                }
+                complete(write(response))
+              }
+            }
+          },
+          path(projectPrefix / "gameCsvFileStatus") {
+            post {
+              entity(as[String]) { data =>
+                implicit val formats = DefaultFormats
+                val jValue = parse(data)
+                val gameFileStatusRequest = jValue.extract[GameFileStatusRequest]
+                var response: GameFileStatusResponse = null
+                val future = Patterns.ask(StarterMain.adminSupervisorActorRef, gameFileStatusRequest, timeout)
+                try {
+                  val gameFileStatusResponse = Await.result(future, timeout.duration).asInstanceOf[GameFileStatusResponse]
+                  response = gameFileStatusResponse
+                } catch {
+                  case e: Exception =>
+                    e.printStackTrace()
+                }
+                complete(write(response))
+              }
+            }
+          },
           path(projectPrefix / "getLevelAttempts") {
             post {
               entity(as[String]) { data =>
@@ -1515,6 +1582,92 @@ object AkkaHttpConnector {
               }
             }
           },
+          path(projectPrefix / "userAttemptDeatailsBetweenDateRange") { 
+            post { entity(as[String]) { data =>    
+             implicit val formats = DefaultFormats
+             val getUserAttemptDeatailsBetweenDate = parse(data).extract[UserAttemptDeatailsBetweenDateRangeRequest]
+             var response: UserAttemptDeatailsBetweenDateRangeResponse = null
+             val future = Patterns.ask(StarterMain.adminSupervisorActorRef, getUserAttemptDeatailsBetweenDate, timeout)
+              try {
+                  response = Await.result(future, timeout.duration).asInstanceOf[UserAttemptDeatailsBetweenDateRangeResponse]
+                } catch {
+                  case e: Exception =>
+                    e.printStackTrace()
+                }
+                complete(write(response))
+
+             }            
+            }
+          },
+
+          path(projectPrefix / "emotionCapture") { 
+            post { entity(as[String]) { data =>    
+             implicit val formats = DefaultFormats
+             val emotionCaptureRequest = parse(data).extract[EmotionCaptureRequest]
+             var emotionCaptureResponse: EmotionCaptureResponse = null
+             val future = Patterns.ask(StarterMain.adminSupervisorActorRef, emotionCaptureRequest, timeout)
+              try {
+                  emotionCaptureResponse = Await.result(future, timeout.duration).asInstanceOf[EmotionCaptureResponse]
+                } catch {
+                  case e: Exception =>
+                    e.printStackTrace()
+                }
+                complete(write(emotionCaptureResponse))
+             }            
+            }
+          },
+
+           path(projectPrefix / "getEmotionCaptureList") { 
+            post { entity(as[String]) { data =>    
+             implicit val formats = DefaultFormats
+             val getEmotionCaptureListRequest = parse(data).extract[GetEmotionCaptureListRequest]
+             var getEmotionCaptureListResponse: GetEmotionCaptureListResponse = null
+             val future = Patterns.ask(StarterMain.adminSupervisorActorRef, getEmotionCaptureListRequest, timeout)
+              try {
+                  getEmotionCaptureListResponse = Await.result(future, timeout.duration).asInstanceOf[GetEmotionCaptureListResponse]
+                } catch {
+                  case e: Exception =>
+                    e.printStackTrace()
+                }
+                complete(write(getEmotionCaptureListResponse))
+             }            
+            }
+          },
+
+          path(projectPrefix / "feedbackCapture") { 
+            post { entity(as[String]) { data =>    
+             implicit val formats = DefaultFormats
+             val feedbackCaptureRequest = parse(data).extract[FeedbackCaptureRequest]
+             var feedbackCapturtResponse: FeedbackCapturtResponse = null
+             val future = Patterns.ask(StarterMain.adminSupervisorActorRef, feedbackCaptureRequest, timeout)
+              try {
+                  feedbackCapturtResponse = Await.result(future, timeout.duration).asInstanceOf[FeedbackCapturtResponse]
+                } catch {
+                  case e: Exception =>
+                    e.printStackTrace()
+                }
+                complete(write(feedbackCapturtResponse))
+             }            
+            }
+          },
+
+           path(projectPrefix / "getfeedbackCaptureList") { 
+            post { entity(as[String]) { data =>    
+             implicit val formats = DefaultFormats
+             val getfeedbackCaptureListRequest = parse(data).extract[GetfeedbackCaptureListRequest]
+             var getfeedbackCaptureListResponse: GetfeedbackCaptureListResponse = null
+             val future = Patterns.ask(StarterMain.adminSupervisorActorRef, getfeedbackCaptureListResponse, timeout)
+              try {
+                  getfeedbackCaptureListResponse = Await.result(future, timeout.duration).asInstanceOf[GetfeedbackCaptureListResponse]
+                } catch {
+                  case e: Exception =>
+                    e.printStackTrace()
+                }
+                complete(write(getfeedbackCaptureListResponse))
+             }            
+            }
+          },
+
 
         )
       }

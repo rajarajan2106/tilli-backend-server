@@ -67,7 +67,14 @@ case class GetUserGameStatusRequest(userId: String, sessionId: String) extends R
 
 case class GetLevelAttemptCountRequest(userId: String, levelId: String) extends Request
 
-case class UpdateLevelAttemptRequest(userId: String, levelId: String, levelPoints: Integer, leveljson: String, levelNo: Integer, sessionId: String, attemptCount: Integer, ip: String, deviceInfo: String, userTime: Long, landingFrom: String) extends Request
+case class UpdateLevelAttemptRequest(userId: String, levelId: String, levelPoints: Integer, leveljson: String, levelNo: Integer, sessionId: String, attemptCount: Integer, ip: String, deviceInfo: String, userTime: Long, landingFrom: String,dateString: String) extends Request
+
+case class GetGameDateWiseReportRequest(startDate: String,endDate: String, pageLimit: Int, noOfPage: Int) extends Request
+
+case class GameCsvFileGenrateRequest(userId: String,startDate : String,endDate : String) extends Request
+
+case class GameFileStatusRequest(userId: String) extends Request
+
 
 case class GetLevelAttemptsRequest(userId: String, pageLimit: Int, noOfPage: Int) extends Request
 
@@ -170,5 +177,13 @@ case class GetMapUserToRoleRequest(sessionId: String, userId: String) extends Re
 
 case class GetRoleAccessRequest(sessionId: String, userId: String) extends Request
 
+case class UserAttemptDeatailsBetweenDateRangeRequest(startDate: String,endDate: String,userId: String,userKey: String,userPassword: String) extends Request
 
+case class  EmotionCaptureRequest(userId: String,levelId: String,themeId: String,emotionKey: String,attemptCount: Int) extends Request
+
+case class  GetEmotionCaptureListRequest(userId: String,levelId: String,themeId: String) extends Request
+
+case class  FeedbackCaptureRequest(userId: String,levelId: String,themeId: String,feedBackKey: String ,activity: String,attemptCount: Int) extends Request
+
+case class GetfeedbackCaptureListRequest(userId: String,levelId: String,themeId: String) extends Request
 

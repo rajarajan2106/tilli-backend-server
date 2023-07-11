@@ -18,6 +18,14 @@ object GlobalMessageConstants {
   val SUCCESSFULLY_BLOCKED = "Successfully Blocked!"
   val SUCCESSFULLY_UN_BLOCKED = "Successfully UnBlocked!"
   val AUTH_TEXT = "Teqbahn@321#"
+  val COMPLETED = "completed"
+  val PROCESSING = "processing"
+
+  val DATE_RANGE_COUNT = 7
+  val DATE_RANGE_MESSAGE = "Please choose maximum 7 days"
+  var EMOTION_TYPES = Array("happy","sad","angry","surprised","scared","disgusted")
+  var FEEDBACK_TYPES = Array("liked","neutral","disliked")
+  var ACTIVITY = Array("bubblepopactivity", "yogaactivity", "coloringactivity","rainbowactivity", "selfHugactivity", "waterdrinkingactivity")
 
 
 }

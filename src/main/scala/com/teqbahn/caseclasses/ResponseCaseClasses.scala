@@ -66,6 +66,12 @@ case class GetUserGameStatusResponse(response: String) extends Response
 
 case class UpdateLevelAttemptResponse(response: String) extends Response
 
+case class GetGameDateWiseResponse(result: Map[String,Any],totalResult: Long) extends Response
+
+case class GameCsvFileGenrateResponse(response: String) extends Response
+
+case class GameFileStatusResponse(response: String) extends Response
+
 case class DeleteGameFileSearchListResponse(response: String) extends Response
 
 case class GetLevelAttemptCountResponse(response: Integer) extends Response
@@ -141,6 +147,15 @@ case class GetMapRoleToPageResponse(listOfPageIds: List[String]) extends Respons
 
 case class GetRoleAccessResponse(result: ListMap[String, Page]) extends Response
 
+case class UserAttemptDeatailsBetweenDateRangeResponse(response: Map[String,Any]) extends Response
+
+case class EmotionCaptureResponse(response: String) extends Response
+
+case class GetEmotionCaptureListResponse(response: List[String]) extends Response
+
+case class FeedbackCapturtResponse(response: String) extends Response
+
+case class GetfeedbackCaptureListResponse(response: Map[String,Any]) extends Response
 
 
 
